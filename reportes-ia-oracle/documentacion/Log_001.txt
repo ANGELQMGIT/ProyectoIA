@@ -1,0 +1,236 @@
+INFO] Scanning for projects...
+[INFO] 
+[INFO] ---------------< com.empresa.reportes:reportes-backend >----------------
+[INFO] Building reportes-backend 1.0.0-SNAPSHOT
+[INFO]   from pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] >>> spring-boot:3.5.15:run (default-cli) > test-compile @ reportes-backend >>>
+[INFO] 
+[INFO] --- resources:3.3.1:resources (default-resources) @ reportes-backend ---
+[INFO] Copying 1 resource from src\main\resources to target\classes
+[INFO] Copying 0 resource from src\main\resources to target\classes
+[INFO] 
+[INFO] --- compiler:3.14.1:compile (default-compile) @ reportes-backend ---
+[INFO] Nothing to compile - all classes are up to date.
+[INFO] 
+[INFO] --- resources:3.3.1:testResources (default-testResources) @ reportes-backend ---
+[INFO] skip non existing resourceDirectory D:\TrabajoAQM\Java21\Antigravity\ProyectoIA\reportes-ia-oracle\backend\src\test\resources
+[INFO] 
+[INFO] --- compiler:3.14.1:testCompile (default-testCompile) @ reportes-backend ---
+[INFO] Nothing to compile - all classes are up to date.
+[INFO]
+[INFO] <<< spring-boot:3.5.15:run (default-cli) < test-compile @ reportes-backend <<<
+[INFO]
+[INFO]
+[INFO] --- spring-boot:3.5.15:run (default-cli) @ reportes-backend ---
+[INFO] Attaching agents: []
+Standard Commons Logging discovery in action with spring-jcl: please remove commons-logging.jar from classpath in order to avoid potential conflicts
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+
+ :: Spring Boot ::               (v3.5.15)
+
+2026-10-01T12:14:07.668-03:00  INFO 40204 --- [           main] c.empresa.reportes.ReportesApplication   : Starting ReportesApplication using Java 21.0.8 with PID 40204 (D:\TrabajoAQM\Java21\Antigravity\ProyectoIA\reportes-ia-oracle\backend\target\classes started by angel in D:\TrabajoAQM\Java21\Antigravity\ProyectoIA\reportes-ia-oracle\backend)
+2026-10-01T12:14:07.669-03:00 DEBUG 40204 --- [           main] c.empresa.reportes.ReportesApplication   : Running with Spring Boot v3.5.15, Spring v6.2.19
+2026-10-01T12:14:07.670-03:00  INFO 40204 --- [           main] c.empresa.reportes.ReportesApplication   : No active profile set, falling back to 1 default profile: "default"
+2026-10-01T12:14:08.200-03:00  INFO 40204 --- [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8080 (http)
+2026-10-01T12:14:08.208-03:00  INFO 40204 --- [           main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-10-01T12:14:08.208-03:00  INFO 40204 --- [           main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.55]
+2026-10-01T12:14:08.242-03:00  INFO 40204 --- [           main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2026-10-01T12:14:08.242-03:00  INFO 40204 --- [           main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 553 ms
+Standard Commons Logging discovery in action with spring-jcl: please remove commons-logging.jar from classpath in order to avoid potential conflicts
+2026-10-01T12:14:08.261-03:00 DEBUG 40204 --- [           main] c.e.reportes.filter.CorrelationIdFilter  : Filter 'correlationIdFilter' configured for use
+2026-10-01T12:14:08.716-03:00  INFO 40204 --- [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8080 (http) with context path '/'
+2026-10-01T12:14:08.720-03:00  INFO 40204 --- [           main] c.empresa.reportes.ReportesApplication   : Started ReportesApplication in 1.299 seconds (process running for 1.48)
+2026-10-01T12:14:22.378-03:00  INFO 40204 --- [omcat-handler-0] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-10-01T12:14:22.379-03:00  INFO 40204 --- [omcat-handler-0] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2026-10-01T12:14:22.379-03:00  INFO 40204 --- [omcat-handler-0] o.s.web.servlet.DispatcherServlet        : Completed initialization in 0 ms
+2026-10-01T12:14:22.407-03:00 DEBUG 40204 --- [omcat-handler-0] o.s.jdbc.core.JdbcTemplate               : Executing SQL query [SELECT ID_REPORTE, NOMBRE_REPORTE, CATEGORIA, DESCRIPCION
+FROM CATALOGO_REPORTES
+WHERE ESTADO = 'ACTIVO'
+ORDER BY CATEGORIA, NOMBRE_REPORTE
+]
+2026-10-01T12:14:22.410-03:00 DEBUG 40204 --- [omcat-handler-0] o.s.jdbc.datasource.DataSourceUtils      : Fetching JDBC Connection from DataSource
+2026-10-01T12:14:22.410-03:00  INFO 40204 --- [omcat-handler-0] com.zaxxer.hikari.HikariDataSource       : OracleHikariPool - Starting...
+2026-10-01T12:14:22.640-03:00  INFO 40204 --- [omcat-handler-0] com.zaxxer.hikari.pool.HikariPool        : OracleHikariPool - Added connection oracle.jdbc.driver.T4CConnection@1ae42de3
+2026-10-01T12:14:22.641-03:00  INFO 40204 --- [omcat-handler-0] com.zaxxer.hikari.HikariDataSource       : OracleHikariPool - Start completed.
+2026-10-01T12:14:22.780-03:00 DEBUG 40204 --- [omcat-handler-1] o.s.jdbc.core.JdbcTemplate               : Executing SQL query [SELECT ID_REPORTE, NOMBRE_REPORTE, CATEGORIA, DESCRIPCION
+FROM CATALOGO_REPORTES
+WHERE ESTADO = 'ACTIVO'
+ORDER BY CATEGORIA, NOMBRE_REPORTE
+]
+2026-10-01T12:14:22.780-03:00 DEBUG 40204 --- [omcat-handler-1] o.s.jdbc.datasource.DataSourceUtils      : Fetching JDBC Connection from DataSource
+2026-10-01T12:14:24.945-03:00 DEBUG 40204 --- [omcat-handler-2] o.s.jdbc.core.JdbcTemplate               : Executing SQL query [SELECT ID_REPORTE, NOMBRE_REPORTE, CATEGORIA, DESCRIPCION
+FROM CATALOGO_REPORTES
+WHERE ESTADO = 'ACTIVO'
+ORDER BY CATEGORIA, NOMBRE_REPORTE
+]
+2026-10-01T12:14:24.945-03:00 DEBUG 40204 --- [omcat-handler-2] o.s.jdbc.datasource.DataSourceUtils      : Fetching JDBC Connection from DataSource
+2026-10-01T12:14:24.951-03:00 DEBUG 40204 --- [omcat-handler-3] o.s.jdbc.core.JdbcTemplate               : Executing SQL query [SELECT ID_REPORTE, NOMBRE_REPORTE, CATEGORIA, DESCRIPCION
+FROM CATALOGO_REPORTES
+WHERE ESTADO = 'ACTIVO'
+ORDER BY CATEGORIA, NOMBRE_REPORTE
+]
+2026-10-01T12:14:24.951-03:00 DEBUG 40204 --- [omcat-handler-3] o.s.jdbc.datasource.DataSourceUtils      : Fetching JDBC Connection from DataSource
+2026-10-01T12:14:47.965-03:00 DEBUG 40204 --- [omcat-handler-5] o.s.jdbc.core.JdbcTemplate               : Executing prepared SQL query
+2026-10-01T12:14:47.965-03:00 DEBUG 40204 --- [omcat-handler-5] o.s.jdbc.core.JdbcTemplate               : Executing prepared SQL statement [SELECT ID_REPORTE, NOMBRE_REPORTE, CATEGORIA, DESCRIPCION, PROMPT_SISTEMA, QUERY_BASE
+FROM CATALOGO_REPORTES
+WHERE ID_REPORTE = ? AND ESTADO = 'ACTIVO'
+]
+2026-10-01T12:14:47.965-03:00 DEBUG 40204 --- [omcat-handler-5] o.s.jdbc.datasource.DataSourceUtils      : Fetching JDBC Connection from DataSource
+2026-10-01T12:14:47.996-03:00 DEBUG 40204 --- [omcat-handler-5] c.e.r.service.AiSqlGeneratorService      : Enviando Prompt a Gemini AI para reporte 'Ventas y Servicios por Cliente y Regi??n'...
+2026-10-01T12:14:49.165-03:00  WARN 40204 --- [omcat-handler-5] o.s.a.r.a.SpringAiRetryAutoConfiguration : Retry error. Retry count: 1, Exception: Failed to generate content
+
+java.lang.RuntimeException: Failed to generate content
+        at org.springframework.ai.google.genai.GoogleGenAiChatModel.getContentResponse(GoogleGenAiChatModel.java:965) ~[spring-ai-google-genai-1.1.8.jar:1.1.8]
+        at org.springframework.ai.google.genai.GoogleGenAiChatModel.lambda$internalCall$3(GoogleGenAiChatModel.java:441) ~[spring-ai-google-genai-1.1.8.jar:1.1.8]
+        at org.springframework.retry.support.RetryTemplate.doExecute(RetryTemplate.java:367) ~[spring-retry-2.0.13.jar:2.0.13]
+        at org.springframework.retry.support.RetryTemplate.execute(RetryTemplate.java:240) ~[spring-retry-2.0.13.jar:2.0.13]
+        at org.springframework.ai.google.genai.GoogleGenAiChatModel.lambda$internalCall$4(GoogleGenAiChatModel.java:437) ~[spring-ai-google-genai-1.1.8.jar:1.1.8]
+        at io.micrometer.observation.Observation.observe(Observation.java:564) ~[micrometer-observation-1.15.12.jar:1.15.12]
+        at org.springframework.ai.google.genai.GoogleGenAiChatModel.internalCall(GoogleGenAiChatModel.java:437) ~[spring-ai-google-genai-1.1.8.jar:1.1.8]
+        at org.springframework.ai.google.genai.GoogleGenAiChatModel.call(GoogleGenAiChatModel.java:424) ~[spring-ai-google-genai-1.1.8.jar:1.1.8]
+        at com.empresa.reportes.service.AiSqlGeneratorService.generateSql(AiSqlGeneratorService.java:66) ~[classes/:na]
+        at com.empresa.reportes.service.DynamicReportService.ejecutar(DynamicReportService.java:53) ~[classes/:na]     
+        at com.empresa.reportes.controller.ReporteController.ejecutar(ReporteController.java:32) ~[classes/:na]        
+        at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103) ~[na:na]
+        at java.base/java.lang.reflect.Method.invoke(Method.java:580) ~[na:na]
+        at org.springframework.web.method.support.InvocableHandlerMethod.doInvoke(InvocableHandlerMethod.java:258) ~[spring-web-6.2.19.jar:6.2.19]
+        at org.springframework.web.method.support.InvocableHandlerMethod.invokeForRequest(InvocableHandlerMethod.java:191) ~[spring-web-6.2.19.jar:6.2.19]
+        at org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod.invokeAndHandle(ServletInvocableHandlerMethod.java:118) ~[spring-webmvc-6.2.19.jar:6.2.19]
+        at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.invokeHandlerMethod(RequestMappingHandlerAdapter.java:991) ~[spring-webmvc-6.2.19.jar:6.2.19]
+        at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.handleInternal(RequestMappingHandlerAdapter.java:896) ~[spring-webmvc-6.2.19.jar:6.2.19]
+        at org.springframework.web.servlet.mvc.method.AbstractHandlerMethodAdapter.handle(AbstractHandlerMethodAdapter.java:87) ~[spring-webmvc-6.2.19.jar:6.2.19]
+        at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:1089) ~[spring-webmvc-6.2.19.jar:6.2.19]
+        at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:979) ~[spring-webmvc-6.2.19.jar:6.2.19]
+        at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:1014) ~[spring-webmvc-6.2.19.jar:6.2.19]
+        at org.springframework.web.servlet.FrameworkServlet.doPost(FrameworkServlet.java:914) ~[spring-webmvc-6.2.19.jar:6.2.19]
+        at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:590) ~[tomcat-embed-core-10.1.55.jar:6.0]
+        at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:885) ~[spring-webmvc-6.2.19.jar:6.2.19]
+        at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:658) ~[tomcat-embed-core-10.1.55.jar:6.0]
+        at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193) ~[tomcat-embed-core-10.1.55.jar:10.1.55]
+        at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:138) ~[tomcat-embed-core-10.1.55.jar:10.1.55]
+        at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:51) ~[tomcat-embed-websocket-10.1.55.jar:10.1.55]
+        at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:162) ~[tomcat-embed-core-10.1.55.jar:10.1.55]
+        at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:138) ~[tomcat-embed-core-10.1.55.jar:10.1.55]
+        at com.empresa.reportes.filter.CorrelationIdFilter.doFilterInternal(CorrelationIdFilter.java:30) ~[classes/:na]
+        at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-6.2.19.jar:6.2.19]
+        at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:162) ~[tomcat-embed-core-10.1.55.jar:10.1.55]
+        at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:138) ~[tomcat-embed-core-10.1.55.jar:10.1.55]
+        at org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:100) ~[spring-web-6.2.19.jar:6.2.19]
+        at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-6.2.19.jar:6.2.19]
+        at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:162) ~[tomcat-embed-core-10.1.55.jar:10.1.55]
+        at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:138) ~[tomcat-embed-core-10.1.55.jar:10.1.55]
+        at org.springframework.web.filter.FormContentFilter.doFilterInternal(FormContentFilter.java:93) ~[spring-web-6.2.19.jar:6.2.19]
+        at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-6.2.19.jar:6.2.19]
+        at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:162) ~[tomcat-embed-core-10.1.55.jar:10.1.55]
+        at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:138) ~[tomcat-embed-core-10.1.55.jar:10.1.55]
+        at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:201) ~[spring-web-6.2.19.jar:6.2.19]
+        at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-6.2.19.jar:6.2.19]
+        at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:162) ~[tomcat-embed-core-10.1.55.jar:10.1.55]
+        at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:138) ~[tomcat-embed-core-10.1.55.jar:10.1.55]
+        at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:165) ~[tomcat-embed-core-10.1.55.jar:10.1.55]
+        at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:88) ~[tomcat-embed-core-10.1.55.jar:10.1.55]
+        at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:492) ~[tomcat-embed-core-10.1.55.jar:10.1.55]
+        at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:113) ~[tomcat-embed-core-10.1.55.jar:10.1.55]
+        at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:83) ~[tomcat-embed-core-10.1.55.jar:10.1.55]
+        at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:72) ~[tomcat-embed-core-10.1.55.jar:10.1.55]
+        at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:342) ~[tomcat-embed-core-10.1.55.jar:10.1.55]
+        at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:399) ~[tomcat-embed-core-10.1.55.jar:10.1.55]
+        at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:63) ~[tomcat-embed-core-10.1.55.jar:10.1.55]
+        at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:1272) ~[tomcat-embed-core-10.1.55.jar:10.1.55]
+        at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1797) ~[tomcat-embed-core-10.1.55.jar:10.1.55]
+        at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:52) ~[tomcat-embed-core-10.1.55.jar:10.1.55]
+        at java.base/java.lang.VirtualThread.run(VirtualThread.java:329) ~[na:na]
+Caused by: com.google.genai.errors.ClientException: 404 . This model models/gemini-2.5-flash is no longer available to new users. Please update your code to use models/gemini-3.8-flash for the latest features and improvements. We recommend you to use the Interactions API (https://ai.google.dev/gemini-api/docs/get-started).
+        at com.google.genai.errors.ApiException.throwFromResponse(ApiException.java:94) ~[google-genai-1.37.0.jar:1.37.0]
+        at com.google.genai.HttpApiResponse.getBody(HttpApiResponse.java:37) ~[google-genai-1.37.0.jar:1.37.0]
+        at com.google.genai.Models.processResponseForPrivateGenerateContent(Models.java:4914) ~[google-genai-1.37.0.jar:1.37.0]
+        at com.google.genai.Models.privateGenerateContent(Models.java:4968) ~[google-genai-1.37.0.jar:1.37.0]
+        at com.google.genai.Models.generateContent(Models.java:6296) ~[google-genai-1.37.0.jar:1.37.0]
+        at org.springframework.ai.google.genai.GoogleGenAiChatModel.getContentResponse(GoogleGenAiChatModel.java:962) ~[spring-ai-google-genai-1.1.8.jar:1.1.8]
+        ... 59 common frames omitted
+
+2026-10-01T12:14:49.170-03:00 ERROR 40204 --- [omcat-handler-5] c.e.r.exception.GlobalExceptionHandler   : Fallo de IA provider=Gemini category=PROVIDER_FAILURE traceId=52407d70-7ec7-4eb6-867b-8bec63bd27d7
+
+java.lang.Throwable: com.empresa.reportes.exception.AiProviderException: No se pudo generar la consulta con el proveedor de IA
+        at com.empresa.reportes.service.AiSqlGeneratorService.generateSql(AiSqlGeneratorService.java:87) ~[classes/:na]
+        at com.empresa.reportes.service.DynamicReportService.ejecutar(DynamicReportService.java:53) ~[classes/:na]     
+        at com.empresa.reportes.controller.ReporteController.ejecutar(ReporteController.java:32) ~[classes/:na]        
+        at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103) ~[na:na]
+        at java.base/java.lang.reflect.Method.invoke(Method.java:580) ~[na:na]
+        at org.springframework.web.method.support.InvocableHandlerMethod.doInvoke(InvocableHandlerMethod.java:258) ~[spring-web-6.2.19.jar:6.2.19]
+        at org.springframework.web.method.support.InvocableHandlerMethod.invokeForRequest(InvocableHandlerMethod.java:191) ~[spring-web-6.2.19.jar:6.2.19]
+        at org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod.invokeAndHandle(ServletInvocableHandlerMethod.java:118) ~[spring-webmvc-6.2.19.jar:6.2.19]
+        at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.invokeHandlerMethod(RequestMappingHandlerAdapter.java:991) ~[spring-webmvc-6.2.19.jar:6.2.19]
+        at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.handleInternal(RequestMappingHandlerAdapter.java:896) ~[spring-webmvc-6.2.19.jar:6.2.19]
+        at org.springframework.web.servlet.mvc.method.AbstractHandlerMethodAdapter.handle(AbstractHandlerMethodAdapter.java:87) ~[spring-webmvc-6.2.19.jar:6.2.19]
+        at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:1089) ~[spring-webmvc-6.2.19.jar:6.2.19]
+        at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:979) ~[spring-webmvc-6.2.19.jar:6.2.19]
+        at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:1014) ~[spring-webmvc-6.2.19.jar:6.2.19]
+        at org.springframework.web.servlet.FrameworkServlet.doPost(FrameworkServlet.java:914) ~[spring-webmvc-6.2.19.jar:6.2.19]
+        at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:590) ~[tomcat-embed-core-10.1.55.jar:6.0]
+        at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:885) ~[spring-webmvc-6.2.19.jar:6.2.19]
+        at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:658) ~[tomcat-embed-core-10.1.55.jar:6.0]
+        at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193) ~[tomcat-embed-core-10.1.55.jar:10.1.55]
+        at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:138) ~[tomcat-embed-core-10.1.55.jar:10.1.55]
+        at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:51) ~[tomcat-embed-websocket-10.1.55.jar:10.1.55]
+        at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:162) ~[tomcat-embed-core-10.1.55.jar:10.1.55]
+        at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:138) ~[tomcat-embed-core-10.1.55.jar:10.1.55]
+        at com.empresa.reportes.filter.CorrelationIdFilter.doFilterInternal(CorrelationIdFilter.java:30) ~[classes/:na]
+        at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-6.2.19.jar:6.2.19]
+        at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:162) ~[tomcat-embed-core-10.1.55.jar:10.1.55]
+        at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:138) ~[tomcat-embed-core-10.1.55.jar:10.1.55]
+        at org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:100) ~[spring-web-6.2.19.jar:6.2.19]
+        at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-6.2.19.jar:6.2.19]
+        at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:162) ~[tomcat-embed-core-10.1.55.jar:10.1.55]
+        at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:138) ~[tomcat-embed-core-10.1.55.jar:10.1.55]
+        at org.springframework.web.filter.FormContentFilter.doFilterInternal(FormContentFilter.java:93) ~[spring-web-6.2.19.jar:6.2.19]
+        at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-6.2.19.jar:6.2.19]
+        at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:162) ~[tomcat-embed-core-10.1.55.jar:10.1.55]
+        at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:138) ~[tomcat-embed-core-10.1.55.jar:10.1.55]
+        at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:201) ~[spring-web-6.2.19.jar:6.2.19]
+        at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-6.2.19.jar:6.2.19]
+        at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:162) ~[tomcat-embed-core-10.1.55.jar:10.1.55]
+        at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:138) ~[tomcat-embed-core-10.1.55.jar:10.1.55]
+        at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:165) ~[tomcat-embed-core-10.1.55.jar:10.1.55]
+        at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:88) ~[tomcat-embed-core-10.1.55.jar:10.1.55]
+        at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:492) ~[tomcat-embed-core-10.1.55.jar:10.1.55]
+        at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:113) ~[tomcat-embed-core-10.1.55.jar:10.1.55]
+        at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:83) ~[tomcat-embed-core-10.1.55.jar:10.1.55]
+        at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:72) ~[tomcat-embed-core-10.1.55.jar:10.1.55]
+        at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:342) ~[tomcat-embed-core-10.1.55.jar:10.1.55]
+        at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:399) ~[tomcat-embed-core-10.1.55.jar:10.1.55]
+        at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:63) ~[tomcat-embed-core-10.1.55.jar:10.1.55]
+        at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:1272) ~[tomcat-embed-core-10.1.55.jar:10.1.55]
+        at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1797) ~[tomcat-embed-core-10.1.55.jar:10.1.55]
+        at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:52) ~[tomcat-embed-core-10.1.55.jar:10.1.55]
+        at java.base/java.lang.VirtualThread.run(VirtualThread.java:329) ~[na:na]
+Caused by: java.lang.Throwable: java.lang.RuntimeException: [detalle omitido]
+        at org.springframework.ai.google.genai.GoogleGenAiChatModel.getContentResponse(GoogleGenAiChatModel.java:965) ~[spring-ai-google-genai-1.1.8.jar:1.1.8]
+        at org.springframework.ai.google.genai.GoogleGenAiChatModel.lambda$internalCall$3(GoogleGenAiChatModel.java:441) ~[spring-ai-google-genai-1.1.8.jar:1.1.8]
+l.java:437) ~[spring-ai-google-genai-1.1.8.jar:1.1.8]
+        at org.springframework.ai.google.genai.GoogleGenAiChatModel.call(GoogleGenAiChatModel.java:424) ~[spring-ai-google-genai-1.1.8.jar:1.1.8]
+        at com.empresa.reportes.service.AiSqlGeneratorService.generateSql(AiSqlGeneratorService.java:66) ~[classes/:na]
+        ... 51 common frames omitted
+Caused by: java.lang.Throwable: com.google.genai.errors.ClientException: [detalle omitido]
+        at com.google.genai.errors.ApiException.throwFromResponse(ApiException.java:94) ~[google-genai-1.37.0.jar:1.37.0]
+        at com.google.genai.HttpApiResponse.getBody(HttpApiResponse.java:37) ~[google-genai-1.37.0.jar:1.37.0]
+        at com.google.genai.Models.processResponseForPrivateGenerateContent(Models.java:4914) ~[google-genai-1.37.0.jar:1.37.0]    
+        at com.google.genai.Models.privateGenerateContent(Models.java:4968) ~[google-genai-1.37.0.jar:1.37.0]
+        at com.google.genai.Models.generateContent(Models.java:6296) ~[google-genai-1.37.0.jar:1.37.0]
+        at org.springframework.ai.google.genai.GoogleGenAiChatModel.getContentResponse(GoogleGenAiChatModel.java:962) ~[spring-ai-google-genai-1.1.8.jar:1.1.8]
+        ... 59 common frames omitted
+
+
+
+
+
+
+

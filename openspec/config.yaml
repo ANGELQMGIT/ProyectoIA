@@ -1,0 +1,46 @@
+schema: spec-driven
+
+context: |
+  Proyecto: Motor Dinámico de Reportes Orientado a Prompts (Text-to-SQL)
+  
+  Tech Stack:
+  - Backend: Java 21, Spring Boot 3.3+, Spring AI (Google Gemini 1.5 Pro/Flash), Virtual Threads, JSqlParser.
+  - Frontend: SPA React/Vite o Vanilla JS, CSS personalizado (Glassmorphism, Dark Mode, Google Fonts), AG-Grid/TanStack Table.
+  - Database: Oracle DB (Tablas de dominio, Vista V_VENTAS_DETALLADAS, Tabla CATALOGO_REPORTES).
+  - MCP: oracle-mcp-server (para inspección de esquemas, testing de queries y automatización del catálogo).
+
+  Arquitectura & Reglas de Negocio:
+  - Text-to-SQL con Gemini AI a partir del Prompt de usuario + Query Base del catálogo.
+  - Guardrails de Seguridad Backend: JSqlParser (solo SELECT/WITH, forzado FETCH FIRST 500 ROWS ONLY, rechazo estricto DDL/DML/Comentarios).
+  - API REST: GET /api/v1/reportes, POST /api/v1/reportes/ejecutar.
+  - UX Premium: Interfaz reactiva con visualización dinámica de columnas, exportación a CSV/Excel e inspector SQL.
+
+rules:
+  proposal:
+    - "Incluir arquitectura de 3 capas: Frontend SPA, Backend Java 21/Spring AI y Oracle DB."
+    - "Especificar la estrategia de Guardrails de Seguridad SQL en el Backend."
+    - "Detallar el rol del MCP oracle-mcp-server en la fase de desarrollo y catálogo."
+    - "Incluir sección de No-Goles (ej. no permitir modificación de datos ni DDL por parte de la IA)."
+  design:
+    - "Frontend: Especificar la paleta de colores oscuros, tipografía (Outfit/Inter) y componentes dinámicos (AG-Grid/TanStack Table)."
+    - "Frontend: Definir estados de carga (skeletons), manejo de errores y exportación a CSV/Excel."
+    - "Backend: Definir los DTOs en Java 21 Records para Request/Response REST."
+    - "Backend: Detallar la pipeline de procesamiento en DynamicReportService (Prompt -> Gemini -> JSqlParser -> JdbcTemplate -> JSON Response)."
+    - "Backend: Habilitar Virtual Threads y manejo global de excepciones."
+    - "Oracle DB: Especificar DDL exacto para tablas de dominio, la vista V_VENTAS_DETALLADAS y CATALOGO_REPORTES en TS_DBTEST_DAT/TS_DBTEST_IDX."
+    - "Oracle DB: Definir usuario USR_DBTEST_APP con permisos exclusivos de SELECT."
+  tasks:
+    - "Tareas DB: Script DDL de dominio, creación de vista V_VENTAS_DETALLADAS y script DML para los 40 reportes."
+    - "Tareas Backend: Proyecto Spring Boot 3.3+ (Java 21), Spring AI Gemini, JSqlParser Guardrails y Endpoints REST."
+    - "Tareas Frontend: UI SPA categorizada, integración de consola prompt, grilla dinámica, exportador CSV/Excel e inspector SQL."
+    - "Tareas MCP: Pruebas de conectividad y validación de consultas mediante oracle-mcp-server."
+
+operations:
+  apply:
+    guidance:
+      - Validar compilación en Java 21 y Virtual Threads habilitados.
+      - Probar inyección de SQL malicioso para verificar que el Guardrail JSqlParser lo rechace.
+      - Verificar conectividad JDBC a Oracle y funcionamiento de CORS.
+  archive:
+    guidance:
+      - Resumir el estado de integración de la base de datos Oracle y los endpoints del backend.
