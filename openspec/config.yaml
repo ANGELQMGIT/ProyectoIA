@@ -5,7 +5,7 @@ context: |
   
   Tech Stack:
   - Backend: Java 21, Spring Boot 3.3+, Spring AI (Google Gemini 1.5 Pro/Flash), Virtual Threads, JSqlParser.
-  - Frontend: SPA React/Vite o Vanilla JS, CSS personalizado (Glassmorphism, Dark Mode, Google Fonts), AG-Grid/TanStack Table.
+  - Frontend: SPA React/Vite, CSS personalizado con sistema de tokens (Dark Mode, Google Fonts: Plus Jakarta Sans + JetBrains Mono), Tabla HTML nativa dinámica, Sidebar responsive.
   - Database: Oracle DB (Tablas de dominio, Vista V_VENTAS_DETALLADAS, Tabla CATALOGO_REPORTES).
   - MCP: oracle-mcp-server (para inspección de esquemas, testing de queries y automatización del catálogo).
 
@@ -22,8 +22,8 @@ rules:
     - "Detallar el rol del MCP oracle-mcp-server en la fase de desarrollo y catálogo."
     - "Incluir sección de No-Goles (ej. no permitir modificación de datos ni DDL por parte de la IA)."
   design:
-    - "Frontend: Especificar la paleta de colores oscuros, tipografía (Outfit/Inter) y componentes dinámicos (AG-Grid/TanStack Table)."
-    - "Frontend: Definir estados de carga (skeletons), manejo de errores y exportación a CSV/Excel."
+    - "Frontend: Especificar la paleta slate-950/sky-500, tipografía (Plus Jakarta Sans para UI, JetBrains Mono para SQL/código) y tabla HTML nativa dinámica con filtro en vivo."
+    - "Frontend: Definir estados de carga (spinner + texto animado), manejo de errores con traceId, toast notifications, métricas de ejecución inline y exportación a CSV nativa."
     - "Backend: Definir los DTOs en Java 21 Records para Request/Response REST."
     - "Backend: Detallar la pipeline de procesamiento en DynamicReportService (Prompt -> Gemini -> JSqlParser -> JdbcTemplate -> JSON Response)."
     - "Backend: Habilitar Virtual Threads y manejo global de excepciones."

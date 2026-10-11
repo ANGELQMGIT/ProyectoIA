@@ -15,7 +15,7 @@
 .mtj.tmp/
 
 # application.properties
-application_local.yml
+application.yml
 
 # Package Files #
 *.jar

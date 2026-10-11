@@ -1,0 +1,684 @@
+<!DOCTYPE html>
+<html lang="es" class="h-full bg-slate-950 text-slate-100">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Reportes IA - Motor de Analítica de Negocio</title>
+  
+  <!-- Google Fonts: Plus Jakarta Sans & JetBrains Mono -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Tailwind CSS CDN Oficial -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+            mono: ['"JetBrains Mono"', 'monospace'],
+          },
+          colors: {
+            brand: {
+              50: '#f0f9ff',
+              400: '#38bdf8',
+              500: '#0ea5e9',
+              600: '#0284c7',
+              700: '#0369a1',
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    /* Suavizado de tipografía y scrollbars */
+    * {
+      scrollbar-width: thin;
+      scrollbar-color: #334155 transparent;
+    }
+    ::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: transparent;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #334155;
+      border-radius: 9999px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #475569;
+    }
+  </style>
+</head>
+
+<body class="h-full flex overflow-hidden font-sans antialiased selection:bg-sky-500/20 selection:text-sky-300">
+
+  <!-- TOAST NOTIFICACIÓN -->
+  <div id="toast" class="fixed top-5 right-5 z-50 transform translate-y-[-120%] opacity-0 transition-all duration-300 pointer-events-none flex items-center gap-2.5 px-4 py-2.5 bg-slate-900 border border-slate-700/80 text-slate-100 rounded-xl shadow-xl text-sm">
+    <svg class="w-4 h-4 text-emerald-400 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+      <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+    </svg>
+    <span id="toast-message">Notificación</span>
+  </div>
+
+  <!-- OVERLAY MÓVIL (BACKDROP) -->
+  <div id="sidebar-backdrop" class="fixed inset-0 bg-black/60 backdrop-blur-xs z-30 hidden md:hidden transition-opacity"></div>
+
+  <!-- SIDEBAR / CATÁLOGO DE REPORTES -->
+  <aside id="sidebar" class="fixed md:static inset-y-0 left-0 z-40 w-72 lg:w-80 flex flex-col bg-slate-900/95 md:bg-slate-900 border-r border-slate-800 transition-transform duration-300 -translate-x-full md:translate-x-0 shadow-2xl md:shadow-none">
+    
+    <!-- Header del Sidebar -->
+    <div class="p-5 border-b border-slate-800 flex items-center justify-between">
+      <div class="flex items-center gap-3">
+        <div class="w-9 h-9 rounded-xl bg-gradient-to-tr from-sky-500 to-indigo-600 flex items-center justify-center shadow-md shadow-sky-500/20">
+          <svg class="w-5 h-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09zM18.259 8.715L18 9.75l-.259-1.035a3.375 3.375 0 00-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 002.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 002.456 2.456L21.75 6l-1.035.259a3.375 3.375 0 00-2.456 2.456zM16.894 20.567L16.5 21.75l-.394-1.183a2.25 2.25 0 00-1.423-1.423L13.5 18.75l1.183-.394a2.25 2.25 0 001.423-1.423l.394-1.183.394 1.183a2.25 2.25 0 001.423 1.423l1.183.394-1.183.394a2.25 2.25 0 00-1.423 1.423z" />
+          </svg>
+        </div>
+        <div>
+          <span class="block text-[10px] font-bold tracking-widest uppercase text-slate-400">Motor de Reportes</span>
+          <div class="flex items-center gap-1.5">
+            <h1 class="text-base font-bold tracking-tight text-white">Reportes IA</h1>
+            <span class="text-[10px] px-1.5 py-0.5 font-medium rounded-full bg-sky-500/10 text-sky-400 border border-sky-500/20">v2.4</span>
+          </div>
+        </div>
+      </div>
+      <button id="close-sidebar" class="md:hidden p-1.5 text-slate-400 hover:text-white rounded-lg hover:bg-slate-800 transition-colors">
+        <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+        </svg>
+      </button>
+    </div>
+
+    <!-- Navegación y Lista de Reportes -->
+    <div class="flex-1 overflow-y-auto p-4 space-y-6">
+      
+      <!-- Categoría: FINANZAS -->
+      <div class="space-y-2">
+        <div class="flex items-center gap-1.5 px-2 text-[11px] font-bold uppercase tracking-wider text-slate-400">
+          <svg class="w-3.5 h-3.5 text-emerald-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v12m-3-2.818l.879.659c1.171.879 3.07.879 4.242 0 1.172-.879 1.172-2.303 0-3.182C13.536 12.219 12.768 12 12 12c-.725 0-1.45-.22-2.003-.659-1.106-.879-1.106-2.303 0-3.182s2.9-.879 4.006 0l.415.33M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+          </svg>
+          <span>Finanzas</span>
+        </div>
+        <div class="space-y-1">
+          <button data-report-id="facturacion" class="report-btn w-full text-left p-3 rounded-xl transition-all border border-transparent bg-slate-900/50 hover:bg-slate-800/60 hover:text-white group">
+            <h3 class="text-xs font-semibold text-slate-200 group-hover:text-white">Facturación y Recaudación Diaria por Canal</h3>
+            <p class="text-[11px] text-slate-400 mt-1 line-clamp-2 leading-relaxed">Seguimiento mensual y diario de montos facturados agrupados por canal comercial de distribución.</p>
+          </button>
+        </div>
+      </div>
+
+      <!-- Categoría: OPERACIONES -->
+      <div class="space-y-2">
+        <div class="flex items-center gap-1.5 px-2 text-[11px] font-bold uppercase tracking-wider text-slate-400">
+          <svg class="w-3.5 h-3.5 text-amber-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
+          </svg>
+          <span>Operaciones</span>
+        </div>
+        <div class="space-y-1">
+          <button data-report-id="desempeno" class="report-btn w-full text-left p-3 rounded-xl transition-all border border-transparent bg-slate-900/50 hover:bg-slate-800/60 hover:text-white group">
+            <h3 class="text-xs font-semibold text-slate-200 group-hover:text-white">Desempeño y Rendimiento por Canal de Venta</h3>
+            <p class="text-[11px] text-slate-400 mt-1 line-clamp-2 leading-relaxed">Análisis de la distribución de clientes e ingresos totales generados por cada canal de venta.</p>
+          </button>
+          <button data-report-id="clientes-activos" class="report-btn w-full text-left p-3 rounded-xl transition-all border border-transparent bg-slate-900/50 hover:bg-slate-800/60 hover:text-white group">
+            <h3 class="text-xs font-semibold text-slate-200 group-hover:text-white">Resumen de Clientes Activos e Histórico de Compras</h3>
+            <p class="text-[11px] text-slate-400 mt-1 line-clamp-2 leading-relaxed">Consolidado de clientes que registran compras activas agrupados por tipo de cliente y región.</p>
+          </button>
+        </div>
+      </div>
+
+      <!-- Categoría: VENTAS -->
+      <div class="space-y-2">
+        <div class="flex items-center gap-1.5 px-2 text-[11px] font-bold uppercase tracking-wider text-slate-400">
+          <svg class="w-3.5 h-3.5 text-sky-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
+          </svg>
+          <span>Ventas</span>
+        </div>
+        <div class="space-y-1">
+          <button data-report-id="top-items" class="report-btn w-full text-left p-3 rounded-xl transition-all border border-transparent bg-slate-900/50 hover:bg-slate-800/60 hover:text-white group">
+            <h3 class="text-xs font-semibold text-slate-200 group-hover:text-white">Top Items y Productos Más Vendidos</h3>
+            <p class="text-[11px] text-slate-400 mt-1 line-clamp-2 leading-relaxed">Ranking dinámico de productos y servicios con mayor volumen de facturación y unidades vendidas.</p>
+          </button>
+          
+          <!-- Elemento Seleccionado por defecto -->
+          <button data-report-id="ventas-servicios" class="report-btn active-report w-full text-left p-3 rounded-xl transition-all border border-sky-500/40 bg-sky-500/10 text-white shadow-md shadow-sky-500/5 group">
+            <div class="flex items-center justify-between">
+              <h3 class="text-xs font-semibold text-sky-300">Ventas y Servicios por Cliente y Región</h3>
+              <svg class="w-4 h-4 text-sky-400 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
+              </svg>
+            </div>
+            <p class="text-[11px] text-slate-300 mt-1 line-clamp-2 leading-relaxed">Análisis dinámico de venta de productos y contratación de servicios agrupados por zona geográfica y tipo de cliente.</p>
+          </button>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Footer del Sidebar -->
+    <div class="p-3.5 border-t border-slate-800 bg-slate-900/70">
+      <div class="flex items-center justify-between text-xs text-slate-400">
+        <div class="flex items-center gap-2">
+          <span class="relative flex h-2 w-2">
+            <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+            <span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+          </span>
+          <span class="text-[11px]">Base de Datos Conectada</span>
+        </div>
+        <span class="font-mono text-[10px] text-slate-400">ORACLE DW</span>
+      </div>
+    </div>
+  </aside>
+
+  <!-- CONTENIDO PRINCIPAL -->
+  <main class="flex-1 flex flex-col h-full overflow-y-auto bg-slate-950">
+    
+    <!-- Barra Superior -->
+    <header class="sticky top-0 z-20 bg-slate-950/85 backdrop-blur-md border-b border-slate-800/80 px-5 md:px-8 py-4 flex items-center justify-between">
+      <div class="flex items-center gap-3">
+        <button id="open-sidebar" class="md:hidden p-2 rounded-xl bg-slate-900 border border-slate-800 text-slate-300 hover:text-white focus:outline-none focus:ring-1 focus:ring-sky-500">
+          <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+          </svg>
+        </button>
+        <div>
+          <div class="flex items-center gap-2 text-[11px] text-slate-400 mb-0.5">
+            <span class="uppercase tracking-wider font-semibold">Reporte Seleccionado</span>
+            <span class="text-slate-600">/</span>
+            <span id="header-category" class="text-sky-400 font-medium">Ventas</span>
+          </div>
+          <h2 id="header-title" class="text-lg md:text-xl font-bold text-white tracking-tight">
+            Ventas y Servicios por Cliente y Región
+          </h2>
+        </div>
+      </div>
+
+      <!-- Badge de categoría y acción rápida -->
+      <div class="flex items-center gap-2.5">
+        <span id="badge-category" class="inline-flex items-center px-3 py-1 rounded-lg text-xs font-semibold bg-sky-500/10 text-sky-400 border border-sky-500/20 uppercase tracking-wider">
+          VENTAS
+        </span>
+      </div>
+    </header>
+
+    <!-- Cuerpo del Contenedor -->
+    <div class="p-4 md:p-8 space-y-6 max-w-7xl w-full mx-auto">
+
+      <!-- TARJETA: PROMPT DE NEGOCIO -->
+      <section class="bg-slate-900 border border-slate-800 rounded-xl p-5 md:p-6 shadow-md">
+        <div class="flex items-center justify-between mb-3">
+          <div class="flex items-center gap-2">
+            <div class="w-2 h-2 rounded-full bg-sky-400"></div>
+            <h3 class="text-xs font-bold uppercase tracking-wider text-slate-200">Prompt de negocio</h3>
+          </div>
+          <span class="text-xs text-slate-400 hidden sm:inline">Formula tu consulta analítica en lenguaje natural</span>
+        </div>
+
+        <div class="space-y-4">
+          <div class="relative">
+            <textarea
+              id="prompt-textarea"
+              rows="3"
+              class="w-full bg-slate-950 border border-slate-800 focus:border-sky-500 rounded-xl p-3.5 text-slate-100 text-sm placeholder-slate-500 focus:outline-none focus:ring-1 focus:ring-sky-500 transition-all font-mono leading-relaxed"
+              placeholder="Ingresa los parámetros de la consulta..."
+            >Mostrar ventas de la region CABA</textarea>
+          </div>
+
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pt-1">
+            <!-- Sugerencias de prompts rápidos -->
+            <div class="flex flex-wrap items-center gap-2 text-xs text-slate-400">
+              <span class="text-[11px] font-semibold text-slate-400 uppercase tracking-wider">Sugerencias:</span>
+              <button class="quick-prompt px-2.5 py-1 rounded-lg bg-slate-800/80 hover:bg-slate-700 text-slate-300 hover:text-white transition-colors border border-slate-700/40">
+                Región CABA
+              </button>
+              <button class="quick-prompt px-2.5 py-1 rounded-lg bg-slate-800/80 hover:bg-slate-700 text-slate-300 hover:text-white transition-colors border border-slate-700/40">
+                Solo clientes EMPRESA
+              </button>
+              <button class="quick-prompt px-2.5 py-1 rounded-lg bg-slate-800/80 hover:bg-slate-700 text-slate-300 hover:text-white transition-colors border border-slate-700/40">
+                Ordenar por mayor venta
+              </button>
+            </div>
+
+            <!-- Botón Ejecutar Reporte con estado dinámico -->
+            <button
+              id="btn-execute"
+              class="inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-xl bg-sky-600 hover:bg-sky-500 active:bg-sky-700 text-white font-semibold text-xs tracking-wide uppercase transition-all shadow-md shadow-sky-600/20 shrink-0 cursor-pointer"
+            >
+              <svg id="btn-icon-play" class="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24">
+                <path d="M8 5v14l11-7z" />
+              </svg>
+              <svg id="btn-icon-spinner" class="w-3.5 h-3.5 border-2 border-white/30 border-t-white rounded-full animate-spin hidden" viewBox="0 0 24 24"></svg>
+              <span id="btn-text">Ejecutar reporte</span>
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- TARJETA: RESULTADOS -->
+      <section class="bg-slate-900 border border-slate-800 rounded-xl overflow-hidden shadow-md">
+        
+        <!-- Header de Resultados y Métricas -->
+        <div class="p-5 border-b border-slate-800 flex flex-col md:flex-row md:items-center justify-between gap-4">
+          <div>
+            <div class="flex items-center gap-2.5 mb-1.5">
+              <h3 class="text-base font-bold text-white tracking-tight">Resultados</h3>
+              <span id="results-count" class="text-xs bg-slate-800 text-slate-300 px-2 py-0.5 rounded-md font-mono border border-slate-700/50">
+                3 registros
+              </span>
+            </div>
+
+            <!-- Metadatos de ejecución -->
+            <div class="flex flex-wrap items-center gap-x-5 gap-y-1 text-xs text-slate-400">
+              <div class="flex items-center gap-1.5">
+                <span class="text-[10px] font-bold text-slate-400 uppercase tracking-wider">PROMPT:</span>
+                <span id="executed-prompt-label" class="text-slate-200 font-mono">Mostrar ventas de la region CABA</span>
+              </div>
+              <div class="flex items-center gap-1.5">
+                <svg class="w-3.5 h-3.5 text-emerald-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 1118 0z" />
+                </svg>
+                <span class="text-[10px] font-bold text-slate-400 uppercase tracking-wider">TIEMPO DE EJECUCIÓN:</span>
+                <span id="execution-time-label" class="text-emerald-400 font-mono font-medium">3956 ms</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Buscador y Botón de Exportación -->
+          <div class="flex items-center gap-2.5 w-full md:w-auto">
+            <div class="relative flex-1 md:w-64">
+              <svg class="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+              </svg>
+              <input
+                id="table-search"
+                type="text"
+                placeholder="Filtrar resultados..."
+                class="w-full bg-slate-950 border border-slate-800 focus:border-sky-500 rounded-lg pl-9 pr-3 py-1.5 text-xs text-slate-200 placeholder-slate-500 focus:outline-none focus:ring-1 focus:ring-sky-500 transition-colors"
+              >
+            </div>
+
+            <button
+              id="btn-export-csv"
+              class="flex items-center gap-2 px-3.5 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700/90 text-slate-200 hover:text-white border border-slate-700 text-xs font-semibold transition-colors shrink-0 shadow-sm"
+              title="Descargar datos en formato CSV"
+            >
+              <svg class="w-3.5 h-3.5 text-slate-300" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+              </svg>
+              <span>Exportar CSV</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Tabla de Datos Responsive -->
+        <div class="overflow-x-auto">
+          <table class="w-full text-left text-xs border-collapse">
+            <thead>
+              <tr id="table-head-row" class="border-b border-slate-800 bg-slate-950/70 text-[11px] font-bold tracking-wider text-slate-400 uppercase">
+                <th class="px-5 py-3.5">REGION</th>
+                <th class="px-5 py-3.5">TIPO_CLIENTE</th>
+                <th class="px-5 py-3.5">TIPO_ITEM</th>
+                <th class="px-5 py-3.5 text-right">TOTAL_VENTAS</th>
+              </tr>
+            </thead>
+            <tbody id="table-body" class="divide-y divide-slate-800/60 font-sans">
+              <!-- Filas insertadas dinámicamente -->
+              <tr class="hover:bg-slate-800/40 transition-colors">
+                <td class="px-5 py-3.5 font-medium text-slate-200">CABA</td>
+                <td class="px-5 py-3.5 text-slate-300">EMPRESA</td>
+                <td class="px-5 py-3.5 text-slate-300">SERVICIO</td>
+                <td class="px-5 py-3.5 text-right font-mono font-medium text-slate-100 tabular-nums">$ 84.000</td>
+              </tr>
+              <tr class="hover:bg-slate-800/40 transition-colors">
+                <td class="px-5 py-3.5 font-medium text-slate-200">CABA</td>
+                <td class="px-5 py-3.5 text-slate-300">EMPRESA</td>
+                <td class="px-5 py-3.5 text-slate-300">PRODUCTO</td>
+                <td class="px-5 py-3.5 text-right font-mono font-medium text-slate-100 tabular-nums">$ 450.000</td>
+              </tr>
+              <tr class="hover:bg-slate-800/40 transition-colors">
+                <td class="px-5 py-3.5 font-medium text-slate-200">CABA</td>
+                <td class="px-5 py-3.5 text-slate-300">INDIVIDUAL</td>
+                <td class="px-5 py-3.5 text-slate-300">PRODUCTO</td>
+                <td class="px-5 py-3.5 text-right font-mono font-medium text-slate-100 tabular-nums">$ 7.000</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Footer de la Tabla -->
+        <div class="px-5 py-3 border-t border-slate-800 bg-slate-950/40 flex items-center justify-between text-xs text-slate-400">
+          <span id="pagination-status">Mostrando 3 de 3 registros</span>
+          <span class="font-mono text-[10px] text-slate-400">Status: Query OK</span>
+        </div>
+      </section>
+
+      <!-- TARJETA: SQL EJECUTADO -->
+      <section class="bg-slate-900 border border-slate-800 rounded-xl overflow-hidden shadow-md">
+        <div class="px-5 py-3.5 border-b border-slate-800 flex items-center justify-between bg-slate-900/90">
+          <div class="flex items-center gap-2">
+            <svg class="w-4 h-4 text-sky-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
+            </svg>
+            <h3 class="text-xs font-bold uppercase tracking-wider text-slate-200">SQL ejecutado</h3>
+            <span class="text-[10px] bg-slate-800 text-sky-400 px-2 py-0.5 rounded font-mono border border-slate-700/60">
+              ANSI SQL
+            </span>
+          </div>
+
+          <!-- Botón Copiar SQL -->
+          <button
+            id="btn-copy-sql"
+            class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white text-xs font-medium transition-colors border border-slate-700"
+          >
+            <svg id="copy-icon" class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+            </svg>
+            <span id="copy-text">Copiar SQL</span>
+          </button>
+        </div>
+
+        <div class="p-4 bg-slate-950 overflow-x-auto">
+          <pre id="sql-code-block" class="font-mono text-xs leading-relaxed text-slate-300 selection:bg-sky-500/30"><code>SELECT REGION, TIPO_CLIENTE, TIPO_ITEM, SUM(SUBTOTAL) AS TOTAL_VENTAS FROM V_VENTAS_DETALLADAS WHERE REGION = 'CABA' GROUP BY REGION, TIPO_CLIENTE, TIPO_ITEM ORDER BY REGION FETCH FIRST 500 ROWS ONLY</code></pre>
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+  <!-- JAVASCRIPT DE INTERACCIÓN INTEGRADO -->
+  <script>
+    // BASE DE DATOS DE REPORTES DISPONIBLES
+    const reportsDatabase = {
+      'ventas-servicios': {
+        category: 'VENTAS',
+        title: 'Ventas y Servicios por Cliente y Región',
+        prompt: 'Mostrar ventas de la region CABA',
+        sql: `SELECT REGION, TIPO_CLIENTE, TIPO_ITEM, SUM(SUBTOTAL) AS TOTAL_VENTAS\nFROM V_VENTAS_DETALLADAS\nWHERE REGION = 'CABA'\nGROUP BY REGION, TIPO_CLIENTE, TIPO_ITEM\nORDER BY REGION\nFETCH FIRST 500 ROWS ONLY`,
+        time: '3956 ms',
+        columns: ['REGION', 'TIPO_CLIENTE', 'TIPO_ITEM', 'TOTAL_VENTAS'],
+        data: [
+          { REGION: 'CABA', TIPO_CLIENTE: 'EMPRESA', TIPO_ITEM: 'SERVICIO', TOTAL_VENTAS: '$ 84.000' },
+          { REGION: 'CABA', TIPO_CLIENTE: 'EMPRESA', TIPO_ITEM: 'PRODUCTO', TOTAL_VENTAS: '$ 450.000' },
+          { REGION: 'CABA', TIPO_CLIENTE: 'INDIVIDUAL', TIPO_ITEM: 'PRODUCTO', TOTAL_VENTAS: '$ 7.000' },
+        ]
+      },
+      'top-items': {
+        category: 'VENTAS',
+        title: 'Top Items y Productos Más Vendidos',
+        prompt: 'Listar productos con mayor facturación en el trimestre',
+        sql: `SELECT COD_PRODUCTO, DESCRIPCION, CATEGORIA, TOTAL_VENDIDO\nFROM V_TOP_ITEMS\nORDER BY TOTAL_VENDIDO DESC\nFETCH FIRST 5 ROWS ONLY`,
+        time: '2180 ms',
+        columns: ['COD_PRODUCTO', 'DESCRIPCION', 'CATEGORIA', 'TOTAL_VENDIDO'],
+        data: [
+          { COD_PRODUCTO: 'PRD-01', DESCRIPCION: 'Servidor Blade Enterprise', CATEGORIA: 'Hardware', TOTAL_VENDIDO: '$ 940.000' },
+          { COD_PRODUCTO: 'SRV-08', DESCRIPCION: 'Soporte Cloud Dedicado', CATEGORIA: 'Servicio', TOTAL_VENDIDO: '$ 620.000' },
+          { COD_PRODUCTO: 'PRD-12', DESCRIPCION: 'Switch Gestionable 48p', CATEGORIA: 'Hardware', TOTAL_VENDIDO: '$ 380.000' },
+        ]
+      },
+      'facturacion': {
+        category: 'FINANZAS',
+        title: 'Facturación y Recaudación Diaria por Canal',
+        prompt: 'Comparativo de facturación mensual por canal digital y presencial',
+        sql: `SELECT CANAL, TOTAL_FACTURADO, TOTAL_COBRADO, TASA_EFECTIVIDAD\nFROM V_FINANZAS_CANALES\nWHERE MES = EXTRACT(MONTH FROM SYSDATE)`,
+        time: '1840 ms',
+        columns: ['CANAL', 'TOTAL_FACTURADO', 'TOTAL_COBRADO', 'TASA_EFECTIVIDAD'],
+        data: [
+          { CANAL: 'E-Commerce Directo', TOTAL_FACTURADO: '$ 1.450.000', TOTAL_COBRADO: '$ 1.420.000', TASA_EFECTIVIDAD: '98%' },
+          { CANAL: 'Canal Corporativo B2B', TOTAL_FACTURADO: '$ 890.000', TOTAL_COBRADO: '$ 820.000', TASA_EFECTIVIDAD: '92%' },
+          { CANAL: 'Distribuidores', TOTAL_FACTURADO: '$ 630.000', TOTAL_COBRADO: '$ 630.000', TASA_EFECTIVIDAD: '100%' },
+        ]
+      },
+      'desempeno': {
+        category: 'OPERACIONES',
+        title: 'Desempeño y Rendimiento por Canal de Venta',
+        prompt: 'Margen y volumen por canal comercial',
+        sql: `SELECT CANAL, CLIENTES_UNICOS, MARGEN_OPERATIVO\nFROM V_KPI_CANALES\nORDER BY MARGEN_OPERATIVO DESC`,
+        time: '2310 ms',
+        columns: ['CANAL', 'CLIENTES_UNICOS', 'MARGEN_OPERATIVO'],
+        data: [
+          { CANAL: 'Digital Autoservicio', CLIENTES_UNICOS: '4.210', MARGEN_OPERATIVO: '54.2%' },
+          { CANAL: 'Partners Certificados', CLIENTES_UNICOS: '580', MARGEN_OPERATIVO: '38.5%' },
+        ]
+      },
+      'clientes-activos': {
+        category: 'OPERACIONES',
+        title: 'Resumen de Clientes Activos e Histórico de Compras',
+        prompt: 'Clientes recurrentes con compras en los últimos 90 días',
+        sql: `SELECT REGION, CLIENTES_ACTIVOS, FRECUENCIA_DIAS\nFROM V_CLIENTES_HISTORICO\nGROUP BY REGION`,
+        time: '3120 ms',
+        columns: ['REGION', 'CLIENTES_ACTIVOS', 'FRECUENCIA_DIAS'],
+        data: [
+          { REGION: 'CABA', CLIENTES_ACTIVOS: '1.240', FRECUENCIA_DIAS: '26 días' },
+          { REGION: 'GBA Norte', CLIENTES_ACTIVOS: '820', FRECUENCIA_DIAS: '34 días' },
+        ]
+      }
+    };
+
+    let currentReportKey = 'ventas-servicios';
+
+    // ELEMENTOS DEL DOM
+    const sidebar = document.getElementById('sidebar');
+    const backdrop = document.getElementById('sidebar-backdrop');
+    const openSidebarBtn = document.getElementById('open-sidebar');
+    const closeSidebarBtn = document.getElementById('close-sidebar');
+    const reportBtns = document.querySelectorAll('.report-btn');
+
+    const headerCategory = document.getElementById('header-category');
+    const headerTitle = document.getElementById('header-title');
+    const badgeCategory = document.getElementById('badge-category');
+    const promptTextarea = document.getElementById('prompt-textarea');
+    const executedPromptLabel = document.getElementById('executed-prompt-label');
+    const executionTimeLabel = document.getElementById('execution-time-label');
+    const resultsCount = document.getElementById('results-count');
+    const paginationStatus = document.getElementById('pagination-status');
+    const sqlCodeBlock = document.getElementById('sql-code-block');
+    const tableHeadRow = document.getElementById('table-head-row');
+    const tableBody = document.getElementById('table-body');
+    const tableSearch = document.getElementById('table-search');
+
+    const btnExecute = document.getElementById('btn-execute');
+    const btnIconPlay = document.getElementById('btn-icon-play');
+    const btnIconSpinner = document.getElementById('btn-icon-spinner');
+    const btnText = document.getElementById('btn-text');
+    const btnCopySql = document.getElementById('btn-copy-sql');
+    const btnExportCsv = document.getElementById('btn-export-csv');
+
+    // CONTROL DEL SIDEBAR MÓVIL
+    function toggleMobileSidebar(open) {
+      if (open) {
+        sidebar.classList.remove('-translate-x-full');
+        backdrop.classList.remove('hidden');
+      } else {
+        sidebar.classList.add('-translate-x-full');
+        backdrop.classList.add('hidden');
+      }
+    }
+
+    openSidebarBtn?.addEventListener('click', () => toggleMobileSidebar(true));
+    closeSidebarBtn?.addEventListener('click', () => toggleMobileSidebar(false));
+    backdrop?.addEventListener('click', () => toggleMobileSidebar(false));
+
+    // RENDERIZADO DE TABLA
+    function renderTable(report, filter = '') {
+      const q = filter.trim().toLowerCase();
+      
+      // Renderizar Headers
+      tableHeadRow.innerHTML = report.columns.map((col, idx) => {
+        const isRight = idx === report.columns.length - 1;
+        return `<th class="px-5 py-3.5 ${isRight ? 'text-right' : 'text-left'}">${col}</th>`;
+      }).join('');
+
+      // Filtrar Filas
+      const filtered = report.data.filter(row => {
+        if (!q) return true;
+        return Object.values(row).some(v => String(v).toLowerCase().includes(q));
+      });
+
+      if (filtered.length === 0) {
+        tableBody.innerHTML = `
+          <tr>
+            <td colspan="${report.columns.length}" class="px-5 py-10 text-center text-slate-400">
+              No se encontraron coincidencias para "${filter}"
+            </td>
+          </tr>`;
+      } else {
+        tableBody.innerHTML = filtered.map(row => `
+          <tr class="hover:bg-slate-800/40 transition-colors">
+            ${report.columns.map((col, idx) => {
+              const isRight = idx === report.columns.length - 1;
+              return `<td class="px-5 py-3.5 ${isRight ? 'text-right font-mono font-medium text-slate-100 tabular-nums' : 'text-slate-300'}">${row[col]}</td>`;
+            }).join('')}
+          </tr>
+        `).join('');
+      }
+
+      resultsCount.textContent = `${filtered.length} registros`;
+      paginationStatus.textContent = `Mostrando ${filtered.length} de ${report.data.length} registros`;
+    }
+
+    // CARGAR UN REPORTE
+    function loadReport(key) {
+      const rep = reportsDatabase[key];
+      if (!rep) return;
+      currentReportKey = key;
+
+      headerCategory.textContent = rep.category;
+      headerTitle.textContent = rep.title;
+      badgeCategory.textContent = rep.category;
+      promptTextarea.value = rep.prompt;
+      executedPromptLabel.textContent = rep.prompt;
+      executionTimeLabel.textContent = rep.time;
+      sqlCodeBlock.textContent = rep.sql;
+      tableSearch.value = '';
+
+      renderTable(rep);
+
+      // Actualizar estilos activos de botones
+      reportBtns.forEach(btn => {
+        const isCurrent = btn.getAttribute('data-report-id') === key;
+        btn.className = isCurrent
+          ? 'report-btn active-report w-full text-left p-3 rounded-xl transition-all border border-sky-500/40 bg-sky-500/10 text-white shadow-md shadow-sky-500/5 group'
+          : 'report-btn w-full text-left p-3 rounded-xl transition-all border border-transparent bg-slate-900/50 hover:bg-slate-800/60 hover:text-white group';
+      });
+
+      toggleMobileSidebar(false);
+    }
+
+    // SELECCIÓN DE REPORTE
+    reportBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const id = btn.getAttribute('data-report-id');
+        loadReport(id);
+      });
+    });
+
+    // BUSCADOR EN VIVO
+    tableSearch.addEventListener('input', (e) => {
+      renderTable(reportsDatabase[currentReportKey], e.target.value);
+    });
+
+    // SUGERENCIAS DE PROMPTS
+    document.querySelectorAll('.quick-prompt').forEach(btn => {
+      btn.addEventListener('click', () => {
+        promptTextarea.value = btn.textContent.trim();
+        promptTextarea.focus();
+      });
+    });
+
+    // EJECUTAR REPORTE (CON LOADING STATE)
+    btnExecute.addEventListener('click', () => {
+      const query = promptTextarea.value.trim() || 'Consulta predeterminada';
+      
+      // Estado de carga
+      btnExecute.disabled = true;
+      btnExecute.classList.add('opacity-75');
+      btnIconPlay.classList.add('hidden');
+      btnIconSpinner.classList.remove('hidden');
+      btnText.textContent = 'Ejecutando...';
+
+      tableBody.innerHTML = `
+        <tr>
+          <td colspan="4" class="px-5 py-12 text-center">
+            <div class="flex flex-col items-center justify-center gap-3">
+              <div class="w-6 h-6 border-2 border-sky-400 border-t-transparent rounded-full animate-spin"></div>
+              <span class="text-xs font-mono text-slate-400">Consultando base de datos y optimizando índices...</span>
+            </div>
+          </td>
+        </tr>`;
+
+      setTimeout(() => {
+        btnExecute.disabled = false;
+        btnExecute.classList.remove('opacity-75');
+        btnIconPlay.classList.remove('hidden');
+        btnIconSpinner.classList.add('hidden');
+        btnText.textContent = 'Ejecutar reporte';
+
+        const randMs = Math.floor(1800 + Math.random() * 2200);
+        executionTimeLabel.textContent = `${randMs} ms`;
+        executedPromptLabel.textContent = query;
+
+        renderTable(reportsDatabase[currentReportKey]);
+        showToast('Reporte ejecutado y tabla actualizada');
+      }, 900);
+    });
+
+    // COPIAR SQL
+    btnCopySql.addEventListener('click', () => {
+      const code = sqlCodeBlock.textContent;
+      navigator.clipboard.writeText(code).then(() => {
+        const copyText = document.getElementById('copy-text');
+        copyText.textContent = '¡Copiado!';
+        copyText.classList.add('text-emerald-400');
+        showToast('SQL copiado al portapapeles');
+        setTimeout(() => {
+          copyText.textContent = 'Copiar SQL';
+          copyText.classList.remove('text-emerald-400');
+        }, 2000);
+      });
+    });
+
+    // EXPORTAR CSV
+    btnExportCsv.addEventListener('click', () => {
+      const rep = reportsDatabase[currentReportKey];
+      const headers = rep.columns.join(',');
+      const rows = rep.data.map(r => rep.columns.map(c => `"${r[c]}"`).join(',')).join('\n');
+      const csvString = 'data:text/csv;charset=utf-8,' + encodeURI(`${headers}\n${rows}`);
+      
+      const a = document.createElement('a');
+      a.href = csvString;
+      a.download = `${currentReportKey}_export_${Date.now()}.csv`;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      showToast('Archivo CSV generado y descargado');
+    });
+
+    // TOAST NOTIFICACIÓN
+    function showToast(msg) {
+      const toast = document.getElementById('toast');
+      const toastMsg = document.getElementById('toast-message');
+      toastMsg.textContent = msg;
+      toast.classList.remove('translate-y-[-120%]', 'opacity-0');
+      toast.classList.add('translate-y-0', 'opacity-100');
+
+      setTimeout(() => {
+        toast.classList.add('translate-y-[-120%]', 'opacity-0');
+        toast.classList.remove('translate-y-0', 'opacity-100');
+      }, 2500);
+    }
+
+    // Inicializar reporte por defecto
+    loadReport('ventas-servicios');
+  </script>
+</body>
+</html>

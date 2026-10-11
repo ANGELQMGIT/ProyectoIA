@@ -2,7 +2,7 @@
 
 ## 1. Project Initialization
 
-- [x] 1.1 Initialize Vite + Vanilla JS project in the `frontend/` directory, configure `index.html` and `style.css` with CSS variables for Dark Mode, Glassmorphism, and Google Fonts (Inter/Outfit). Verify by running `npm run dev` and confirming the dark aesthetic in the browser.
+- [x] 1.1 Initialize Vite + React project in the `frontend/` directory, configure `index.html` and `styles.css` with CSS custom properties for Dark Mode, Glassmorphism, and Google Fonts (Inter/Outfit). Verify by running `npm run dev` and confirming the dark aesthetic in the browser.
 
 ## 2. API Integration & Services
 
@@ -18,3 +18,11 @@
 ## 4. End-to-End Integration
 
 - [x] 4.1 Connect all UI components to the `api.js` service to achieve the full Text-to-SQL flow (select base query -> input prompt -> submit -> show skeleton -> render grid & SQL). Verify by submitting a real prompt to the running backend and viewing the dynamic results in the grid.
+
+## 5. UX Redesign — Premium UI (based on ai_studio_code.html reference)
+
+- [x] 5.1 Update typography system: replace Inter/Outfit with **Plus Jakarta Sans** (UI) and **JetBrains Mono** (SQL/mono) in `index.html` and rebuild the full CSS token system in `styles.css` (slate-950 base palette, sky-500 accent, CSS custom properties for all colors, radii, shadows, and fonts).
+- [x] 5.2 Implement responsive **sidebar layout**: fixed 288px sidebar with categorized report list (icons per category: Finanzas/Operaciones/Ventas), collapsible on mobile via hamburger button, backdrop overlay, and animated slide transition. Includes DB connection indicator with animated pulse in footer.
+- [x] 5.3 Replace AG-Grid with a **native HTML `<table>`** driven by `result.columnas[]` and `result.filas[]`. Implement **live filter input** that client-side filters rows in real time. Remove `ag-grid-community` and `ag-grid-react` from `package.json`. Implement native CSV export using Blob + URL.createObjectURL.
+- [x] 5.4 Add **quick-prompt chips** below the prompt textarea (clickable suggestions that populate the textarea). Display **execution metrics** (prompt used + `tiempoEjecucionMs`) in the results card header after each execution.
+- [x] 5.5 Add **toast notification** system (animated slide-in/out, auto-dismiss after 2.6s) for execute, copy SQL, and export CSV actions. Add **Copy SQL button** with Clipboard API and visual "¡Copiado!" feedback state. Display pagination status ("Mostrando N de M registros") in table footer.
